@@ -2,6 +2,7 @@ from datetime import timedelta
 from django.core.validators import RegexValidator, MaxValueValidator
 from django.db import models
 from django.utils import timezone
+from apps.games.tasks import application_send_mail
 
 
 class Tags(models.Model):
@@ -64,6 +65,16 @@ class GameApplication(models.Model):
         
     def save(self, *args, **kwargs):
         self.max_people_count(self.game)
+        data = {
+            'phone_number': self.phone_number,
+            'full_name': self.full_name,
+            'game': self.game.title,
+            'games_date': f'Real date {self.game.date} -> Users Date {self.date}',
+            'games_time': self.game.time,
+            'games_max_people': self.game.max_people,
+            'people_count': self.people_count,
+        }
+        application_send_mail.delay(data)
         super().save(*args, **kwargs)
 
     def __str__(self):
