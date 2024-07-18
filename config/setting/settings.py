@@ -136,7 +136,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = ['GЕT', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 CORS_ALLOW_HEADERS = ['Authorization', 'Content-Type']
 
-CSRF_TRUSTED_ORIGINS=["http://127.0.0.1:8000/"]
+CSRF_TRUSTED_ORIGINS=["http://127.0.0.1:8000/", 'http://34.159.205.4']
 
 def show_toolbar(request):
     return True
